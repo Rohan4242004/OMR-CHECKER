@@ -3,7 +3,7 @@ OMR-CHECKER
 OMR- CHECKER is a modern web application built with React + TypeScript, powered by Vite for fast development and Tailwind CSS for styling.
 The project includes a clean UI built using shadcn-ui components.
 
-Live Demo: https://grade-scan.onrender.com/
+Live Demo: https://omr-checker-lake.vercel.app/
 
 🚀 Tech Stack
 
