@@ -88,10 +88,10 @@ dist
 Add your environment variables in Render → Environment.
 
 Your production site is live here:
-👉 https://grade-scan.onrender.com/
+👉 https://omr-checker-lake.vercel.app/
 
 📁 Project Structure
-└── grade-scan/
+└── OMR-CHECKER/
     ├── public/
     ├── src/
     │   ├── components/
