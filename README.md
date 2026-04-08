@@ -66,9 +66,9 @@ VITE_SUPABASE_ANON_KEY=your_key_here
 
 📤 Deployment
 
-This project is optimized for Render Static Site Hosting.
+This project is optimized for Vercel Hosting.
 
-Render Deployment Settings
+Vercel Deployment Settings
 
 Build Command
 
@@ -80,12 +80,8 @@ or
 npm install && npm run build
 
 
-Publish Directory
 
-dist
-
-
-Add your environment variables in Render → Environment.
+Add your environment variables in Vercel → Environment.
 
 Your production site is live here:
 👉 https://omr-checker-lake.vercel.app/
