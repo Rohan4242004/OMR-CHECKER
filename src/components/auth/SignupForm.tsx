@@ -7,6 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Link } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
+import { useToast } from "@/hooks/use-toast";
 import { FileText, Users, UserPlus } from "lucide-react";
 
 const SignupForm = () => {
@@ -18,21 +19,35 @@ const SignupForm = () => {
     confirmPassword: "",
     acceptTerms: false
   });
+  const { toast } = useToast();
   const { signup } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-
     // Basic validation
+    if (formData.password.length < 6) {
+      toast({ title: "Weak Password", description: "Password must be at least 6 characters.", variant: "destructive" });
+      setIsLoading(false);
+      return;
+    }
+
     if (formData.password !== formData.confirmPassword) {
+      toast({ title: "Passwords Don't Match", description: "Please make sure both passwords are identical.", variant: "destructive" });
       setIsLoading(false);
       return;
     }
 
     if (!formData.acceptTerms) {
+      toast({ title: "Terms Required", description: "Please accept the Terms of Service and Privacy Policy.", variant: "destructive" });
       setIsLoading(false);
       return;
+    }
+
+    try {
+      await signup(formData.email.trim(), formData.password, formData.name.trim());
+    } finally {
+      setIsLoading(false);
     }
 
     await signup(formData.email, formData.password, formData.name);
