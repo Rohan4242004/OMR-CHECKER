@@ -37,15 +37,17 @@ export const useAuth = () => {
       const { data, error } = await supabase.auth.signUp({
         email,
         password,
-                options: {
+        options: {
           emailRedirectTo: `${window.location.origin}/student`,
-          data: { full_name: name }
+          data: {
+            full_name: name
+          }
         }
       });
 
       if (error) throw error;
 
-      // Already-registered email: Supabase returns no error, just no identities
+      // Supabase returns an obfuscated user with no identities for an already-registered email
       if (data.user && data.user.identities && data.user.identities.length === 0) {
         throw new Error('An account with this email already exists. Please sign in instead.');
       }
