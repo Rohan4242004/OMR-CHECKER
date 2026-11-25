@@ -37,14 +37,28 @@ export const useAuth = () => {
       const { data, error } = await supabase.auth.signUp({
         email,
         password,
-        options: {
-          data: {
-            full_name: name
-          }
+                options: {
+          emailRedirectTo: `${window.location.origin}/student`,
+          data: { full_name: name }
         }
       });
 
       if (error) throw error;
+
+      // Already-registered email: Supabase returns no error, just no identities
+      if (data.user && data.user.identities && data.user.identities.length === 0) {
+        throw new Error('An account with this email already exists. Please sign in instead.');
+      }
+
+      // No session means email confirmation is required
+      if (!data.session) {
+        toast({
+          title: 'Check Your Email',
+          description: 'We sent a confirmation link. Confirm your email, then sign in.'
+        });
+        navigate('/login');
+        return { data, error: null };
+      }
 
       toast({
         title: 'Account Created Successfully!',
