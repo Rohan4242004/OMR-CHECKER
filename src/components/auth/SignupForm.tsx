@@ -19,13 +19,14 @@ const SignupForm = () => {
     confirmPassword: "",
     acceptTerms: false
   });
-  const { toast } = useToast();
   const { signup } = useAuth();
+  const { toast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    // Basic validation
+
+    // Basic validation (show feedback instead of failing silently)
     if (formData.password.length < 6) {
       toast({ title: "Weak Password", description: "Password must be at least 6 characters.", variant: "destructive" });
       setIsLoading(false);
@@ -49,9 +50,6 @@ const SignupForm = () => {
     } finally {
       setIsLoading(false);
     }
-
-    await signup(formData.email, formData.password, formData.name);
-    setIsLoading(false);
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
